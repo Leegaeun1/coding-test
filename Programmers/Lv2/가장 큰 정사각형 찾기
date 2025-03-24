@@ -1,0 +1,14 @@
+def solution(board):
+    m, n = len(board), len(board[0]) # 행, 열
+    dp = [[0]* n for _ in range(m)]
+    max_side = 0 # 최대 변 길이
+    
+    for i in range(m):
+        for j in range(n):
+            if board[i][j]==1: # 1일때
+                if i==0 or j==0: # 첫행, 첫열은 길이 1
+                    dp[i][j] = 1
+                else:
+                    dp[i][j] = min(dp[i-1][j], dp[i][j-1],dp[i-1][j-1]) + 1 # 바로 위,왼쪽,대각선부분 중 가장 작은 값 + 1(자신) 
+                max_side = max(max_side, dp[i][j]) # 최대이면 갱신해주기 
+    return max_side**2 # 넓이
